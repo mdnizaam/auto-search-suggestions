@@ -1,51 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./SearchBar.css";
-import SearchIon from "../images/search-icon.png";
-import data from "../constants/states.json";
+import SearchIcon from "../images/search-icon.png";
+import Data from "../constants/states.json";
+
 const SearchBar = () => {
-  const [search, setSearch] = useState("");
-  const [searchData, setSearchData] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+  const [searchedData, setSearchedData] = useState([]);
   const handleChange = (e) => {
-    setSearch(e.target.value);
-    let search = e.target.value;
-    if (search) {
-      const filteredData = data.filter((item) =>
-        item?.name?.toLowerCase()?.includes(search?.toLowerCase())
-      );
-      console.log("filteredData", filteredData);
-      setSearchData(filteredData);
+    const value = e.target?.value;
+    setSearchInput(value);
+    if (value) {
+      const filteredData = Data.filter((items) => {
+        return items?.name
+          ?.toLocaleLowerCase()
+          .includes(value?.toLocaleLowerCase());
+      });
+      setSearchedData(filteredData);
     } else {
-      setSearchData([]);
+      setSearchedData([]);
     }
   };
-
-  const handleSearchClick = (value) => {
-    if (value) {
-      setSearch(value);
-      setSearchData([]);
+  const handleClick = (name) => {
+    if (name) {
+      setSearchInput(name);
+      setSearchedData([]);
     }
   };
   return (
     <div className="search-container">
       <div className="search-bar">
         <input
-          placeholder="search here..."
-          autoComplete="off"
-          value={search}
+          value={searchInput}
           onChange={handleChange}
+          placeholder="Search Heare..."
         />
         <div className="search-icon">
-          <img src={SearchIon} width={25} />
+          <img src={SearchIcon} width={25} />
         </div>
       </div>
-      {searchData?.length ? (
-        <div className="search-item">
+      {searchedData?.length ? (
+        <div className="search-items">
           <ul>
-            {searchData.slice(0, 7).map((item) => {
+            {searchedData?.slice(0, 10).map((item) => {
               return (
-                <li onClick={() => handleSearchClick(item?.name)}>
-                  {item?.name}
-                </li>
+                <li onClick={() => handleClick(item.name)}>{item?.name}</li>
               );
             })}
           </ul>

@@ -1,12 +1,11 @@
-import logo from "./logo.svg";
-import "./App.css";
 import SearchBar from "./components/SearchBar";
 
 function App() {
   return (
-    <>
+    <div>
+      <h1 style={{ textAlign: "center" }}>Auto Search Bar</h1>
       <SearchBar />
-    </>
+    </div>
   );
 }
 
